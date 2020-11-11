@@ -1,0 +1,122 @@
+/*
+body
+{
+
+    background-color: blue;
+}
+*/
+
+.nav
+{
+    margin-top: 10px;
+    background-color: blue;
+}
+
+.nav ul li
+{
+    display: inline;
+/*
+    list-style-type: none;
+*/
+}
+
+.nav ul li .btn
+{
+    color: #FFF;
+    font-weight: bold;   
+    text-decoration: none;
+    padding: 20px;
+/*
+    display: inline-block;
+*/
+}
+
+.sign-up
+{
+    margin-top: 10px;
+}
+
+.sign-up .label
+{
+    height: 35.75px;
+    background-color: blue;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+}
+
+.sign-up .label .label-content
+{
+    padding-top: 5.63333px;
+    padding-bottom: 5.63333px;
+    color: white;
+    text-align: center;
+}
+
+.sign-up .card
+{
+    width: 50%;
+    margin: auto;
+}
+
+.sign-up .input-group
+{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.login
+{
+    margin-top: 10px;
+}
+
+.login .label
+{
+    height: 35.75px;
+    background-color: blue;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+}
+
+.login .label .label-content
+{
+    padding-top: 5.63333px;
+    padding-bottom: 5.63333px;
+    color: white;
+    text-align: center;
+}
+
+.login .card
+{
+    width: 50%;
+    margin: auto;
+}
+
+.login .input-group
+{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.dashboard
+{
+    margin-top: 10px;
+}
+
+.dashboard .label
+{
+    height: 35.75px;
+    background-color: blue;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+}
+
+.dashboard .label .label-content
+{
+    padding-top: 5.63333px;
+    padding-bottom: 5.63333px;
+    color: white;
+    text-align: center;
+}
