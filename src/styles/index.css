@@ -12,6 +12,12 @@ body
     background-color: blue;
 }
 
+.nav ul
+{
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+
 .nav ul li
 {
     display: inline;
@@ -20,15 +26,25 @@ body
 */
 }
 
-.nav ul li .btn
+.nav ul li a
 {
+
     color: #FFF;
+/*  
+    color: black;
+*/
     font-weight: bold;   
     text-decoration: none;
     padding: 20px;
 /*
     display: inline-block;
 */
+}
+
+.search .drop-down-menu
+{
+    margin: auto;
+    text-align: center;
 }
 
 .sign-up
