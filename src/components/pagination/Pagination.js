@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {Nav} from "reactstrap";
 
 class Pagination extends Component
 {
@@ -8,43 +7,56 @@ class Pagination extends Component
         super(props);
         this.state = 
         {
-            pageNumbers: []
+            pageNumbers: [],
         }
     }
 
-    componentDidMount()
+    componentWillMount()
     {
-/*
-        console.log(this.props.totalPosts);
-        console.log(this.props.postsPerPage);
-*/
-
-        var totalPosts    = this.props.totalPosts;
-        var postsPerPage  = this.props.postsPerPage;
-
-        for(var i=1;i<=Math.ceil(totalPosts / postsPerPage);i++)
-        {
-            console.log(i);
-            this.state.pageNumbers.push(i);
-        }
+        
     }
 
     render()
     {
+        var totalPosts    = this.props.totalPosts;
+        var postsPerPage  = this.props.postsPerPage;
+
+        this.state.pageNumbers = [];
+        for(var i=1;i<=Math.ceil(totalPosts / postsPerPage);i++)
+        {
+//          console.log(i);
+            this.state.pageNumbers.push(i);
+        }
 
         return(
-
-//          <div>Hello, World!!!</div>
             <nav>
                 <ul className="pagination">
-                    {this.state.pageNumbers.map(
-                        (number) =>
-                        (
-                            <li key={number} className="page-item">
-                                <a onClick={() => this.props.paginate(number)} className="page-link">{number}</a>
-                            </li>
+                    {
+                        this.state.pageNumbers.map(
+                            (number) =>
+                            {
+                                return(
+                                    <li key={number} className="page-item">
+                                        <a 
+                                            className = "page-link"
+                                            style = 
+                                            {
+                                                {
+                                                    color: (this.props.currentPage === number)?"red":"black"
+                                                }
+                                            }
+                                            onClick = 
+                                            {
+                                                () => this.props.paginate(number)
+                                            }
+                                        >
+                                            {number}
+                                        </a>
+                                    </li>
+                                );
+                            }
                         )
-                    )}
+                    }
                 </ul>
             </nav>
         );
