@@ -1,12 +1,11 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
-import {Nav} from "reactstrap";
 
 function Login(props)
 {
     return(
 
-        <button className="btn" onClick={props.handleLogin}>Login</button>
+        <a className="btn" onClick={props.onClick}>Login</a>
     );
 }
 
@@ -14,7 +13,7 @@ function Logout(props)
 {
     return(
 
-        <button className="btn" onClick={props.handleLogout}>Logout</button>
+        <a className="btn" onClick={props.onClick}>Logout</a>
     );
 }
 
@@ -22,7 +21,7 @@ function SignUp(props)
 {
     return(
 
-        <button className="btn" onClick={props.handleSignUp}>Sign Up</button>
+        <a className="btn" onClick={props.onClick}>Sign Up</a>
     );
 }
 
@@ -36,7 +35,6 @@ function Greetings(props)
 
 class NavBar extends Component
 {
-
     constructor(props)
     {
         super(props);
@@ -46,14 +44,24 @@ class NavBar extends Component
         }
     }
 
-    componentDidMount()
+    componentWillMount()
     {
 
     }
 
+    redirectToHome = () =>
+    {
+        this.props.history.push("/");
+    }
+
+    redirectToSearch = () =>
+    {
+        this.props.history.push("/search");
+    }
+
     handleLogin = () =>
     {
-
+        this.props.history.push("/login");
     }
 
     handleLogout = () =>
@@ -61,19 +69,25 @@ class NavBar extends Component
         
     }
 
+    handleSignUp = () =>
+    {
+        this.props.history.push("/signup");
+    }
+
     render()
     {
-        var btn         = (this.state.isUserLogged === false)?(<Login   onClick={this.onClick}       />):(<Logout    onClick={this.onClick}  />);
-        var greetings   = (this.state.isUserLogged === false)?(<SignUp  onClick={this.handleSignUp}  />):(<Greetings                         />);
+        var login  = (this.state.isUserLogged === false)?(<Login  onClick={this.handleLogin} />):(<Logout onClick={this.handleLogout}/>);
+        var signUp = (this.state.isUserLogged === false)?(<SignUp onClick={this.handleSignUp}/>):null;
         return(
 
-            <Nav className="nav">
+            <div className="nav">
                 <ul>
-                    <li><button className="btn" >Home</button>  </li>
-                    <li                         >{btn}          </li>
-                    <li                         >{greetings}    </li>
+                    <li><a className="btn" onClick={this.redirectToHome}  >Home  </a></li>
+                    <li><a className="btn" onClick={this.redirectToSearch}>Browse</a></li>
+                    <li>{login} </li>
+                    <li>{signUp}</li>
                 </ul>
-            </Nav>
+            </div>
         );
     }
 }
