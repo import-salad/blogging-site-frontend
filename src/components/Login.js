@@ -14,50 +14,53 @@ class Login extends Component
         super(props);
         this.state = 
         {
-            email: "",
+            username: "",
             password: ""
         };
     }
 
-    email = (e) =>
+    updateUsername = (e) =>
     {
-        this.setState({email : e.target.value});
+        this.setState(
+            {
+                username: e.target.value
+            }
+        );
     }    
 
-    password = (e) =>
+    updatePassword = (e) =>
     {
-        this.setState({password: e.target.value});
+        this.setState(
+            {
+                password: e.target.value
+            }
+        );
     }
 
-    login = (e) =>
+    handleLogin = (e) =>
     {
-    
+/*
         this.result = "";
-
         fetch(
             baseURL + "user?username=" + this.state.email + "&password=" + this.state.password,
             {
                 method: "GET"
             }
         )
-        .then((response)    => response.json())
-        .then((result)      => {this.result = JSON.stringify(result)})
-        .catch((err)        => {console.log(err)});
-
-        console.log(this.result);
-/*
-        localStorage.setItem("isUserLogged","true");
-
-        this.props.history.push("/");
+        .then((response) => response.json())
+        .then((result)   => {this.result = JSON.stringify(result)})
+        .catch((err)     => {console.log(err)});
 */
-    }
+        const userID = 0;
+        this.props.history.push("/user/" + userID);
+}
 
     render()
     {
         return(
 
             <div className="login">
-                <NavBar history={this.props.history} isUserLogged={false}/>
+                <NavBar isUserLogged={false}/>
                 <Container>
                     <Row>
                         <Col>
@@ -68,12 +71,12 @@ class Login extends Component
                                             <Col className="label-content">Login</Col>
                                         </Row>
                                         <InputGroup className="input">
-                                            <Input type="text" onChange={this.email}    placeholder="E-mail">   </Input>
+                                            <Input type="text" onChange={this.updateUsername} placeholder="Username"></Input>
                                         </InputGroup>
                                         <InputGroup>
-                                            <Input type="text" onChange={this.password} placeholder="password"> </Input>
+                                            <Input type="text" onChange={this.updatePassword} placeholder="Password"></Input>
                                         </InputGroup>
-                                        <Button onClick={this.login} color="success" block>Login                </Button>
+                                        <Button onClick={this.handleLogin} color="success" block>Login</Button>
                                     </Form>
                                 </CardBody>
                             </Card>
