@@ -47,17 +47,18 @@ class QuillEditor extends React.Component {
 
         this.state = {
             editorHtml: __ISMSIE__ ? "<p>&nbsp;</p>" : "",
-            files: [],
+            isLoading1:true
         };
 
         this.reactQuillRef = null;
-
-        this.inputOpenImageRef = React.createRef();
-        this.inputOpenVideoRef = React.createRef();
-        this.inputOpenFileRef = React.createRef();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if(this.props.content.length>10)
+            this.setState({editorHtml:this.props.content,isLoading1:false}) ;
+        else
+            this.setState({isLoading1:false}) ;
+        /*console.log(this.state.editorHtml) ;*/
         this._isMounted = true;
     }
 
@@ -82,6 +83,8 @@ class QuillEditor extends React.Component {
     
 
     render() {
+        if(this.state.isLoading1)
+            return null ;
         return (
             <div>
                 <div id="toolbar">
@@ -121,12 +124,6 @@ class QuillEditor extends React.Component {
         toolbar: {
             container: "#toolbar",
             //id ="toorbar"는  그 위에 B I U S I V F P 이거 있는 곳이다. 
-            handlers: {
-                insertImage: this.imageHandler,
-                insertVideo: this.videoHandler,
-                insertFile: this.fileHandler,
-                insertPoll: this.pollHandler,
-            }
         },
 
     };

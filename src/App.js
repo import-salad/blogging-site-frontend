@@ -9,6 +9,7 @@ import Post from "./components/Post.js";
 import Dashboard from "./components/Dashboard.js";
 import ViewBlog from "./components/ViewBlog.js";
 import AddBlog from "./components/AddBlog"
+import EditBlog from "./components/EditBlog"
 
 class App extends Component
 {
@@ -149,6 +150,20 @@ class App extends Component
                                     />
                                 )
                             }
+                        }
+                    />
+                    <Route
+                        exact path = "/user/:userID/edit/:blogID"
+                        render =
+                        {
+                            (props) =>
+                            {
+                                return(
+                                    <EditBlog
+                                        {...props}
+                                    />
+                                )
+                            } 
                         }
                     />
                 </Switch>

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
+import EditDeleteOption from "../sections/EditDeleteOption";
 import RenderBlogHeader from "../sections/RenderBlogHeader";
 
 class PostList extends Component
@@ -31,8 +32,9 @@ class PostList extends Component
                                         }
                                     }
                                 >
-                                    <RenderBlogHeader blogHeader={post}/>
+                                    <RenderBlogHeader blogHeader={post} userID={this.props.userID}/>
                                 </a>
+                                <EditDeleteOption username={this.props.userID} blogHeader={post}/>
                             </li>
                         )
                     )
