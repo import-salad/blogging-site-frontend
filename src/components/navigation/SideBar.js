@@ -1,11 +1,17 @@
 import React, {Component} from "react";
 import {Container, Row, Col} from "reactstrap";
+import {withRouter} from "react-router-dom";
 
 class SideBar extends Component
 {
     constructor(props)
     {
         super(props);
+    }
+
+    onAddBlog = ()=>
+    {
+        this.props.history.push("/user/"+this.props.userID+"/add") ;
     }
     
     render()
@@ -31,7 +37,7 @@ class SideBar extends Component
                         }
                     }
                 >
-                    <li>Add</li>
+                    <li onClick={this.onAddBlog}>Add</li>
                     <li>View</li>
                     <li>Settings</li>
                 </ul>
@@ -40,4 +46,4 @@ class SideBar extends Component
     }
 }
 
-export default SideBar;
+export default withRouter(SideBar);

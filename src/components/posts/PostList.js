@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
+import RenderBlogHeader from "../sections/RenderBlogHeader";
 
 class PostList extends Component
 {
@@ -10,6 +11,8 @@ class PostList extends Component
 
     render()
     {
+        if(this.props.posts.length === 0)
+            return null ;
         return(
 
             <ul className="list-group mb-4">
@@ -17,18 +20,18 @@ class PostList extends Component
                     this.props.posts.map(
                         (post) =>
                         (
-                            <li key={post.ID} className="list-group-item">
+                            <li key={post.blogID} className="list-group-item">
                                 <a
                                     className="btn"
                                     onClick =
                                     {
                                         () =>
                                         {
-                                            this.props.history.push("/post/" + post.ID);
+                                            this.props.history.push("/blog/" + post.blogID);
                                         }
                                     }
                                 >
-                                    {post.name}
+                                    <RenderBlogHeader blogHeader={post}/>
                                 </a>
                             </li>
                         )

@@ -7,6 +7,8 @@ import SignUp from "./components/SignUp.js";
 import Search from "./components/Search.js";
 import Post from "./components/Post.js";
 import Dashboard from "./components/Dashboard.js";
+import ViewBlog from "./components/ViewBlog.js";
+import AddBlog from "./components/AddBlog"
 
 class App extends Component
 {
@@ -118,6 +120,34 @@ class App extends Component
                                         {...props}
                                     />
                                 );
+                            }
+                        }
+                    />
+                    <Route
+                        exact path = "/blog/:blogID"
+                        render =
+                        {
+                            (props) =>
+                            {
+                                return(
+                                    <ViewBlog
+                                        {...props}
+                                    />
+                                )
+                            }
+                        }
+                    />
+                    <Route
+                        exact path = "/user/:userID/add"
+                        render =
+                        {
+                            (props) =>
+                            {
+                                return(
+                                    <AddBlog
+                                        {...props}
+                                    />
+                                )
                             }
                         }
                     />

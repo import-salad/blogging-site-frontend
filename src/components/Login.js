@@ -1,11 +1,14 @@
+import Axios from "axios";
 import React, {Component} from "react";
 import {Container, Row, Col} from "reactstrap";
 import {Card, CardBody} from "reactstrap";
 import {Form, InputGroup, Input, Button} from "reactstrap";
+import UserService from '../services/UserService'
 
 import NavBar from "./navigation/NavBar.js";
 
-const baseURL = "https://113.193.94.216:8080/";
+const userService = new UserService() ;
+//const baseURL = "http://localhost:8080/"
 
 class Login extends Component
 {
@@ -21,39 +24,27 @@ class Login extends Component
 
     updateUsername = (e) =>
     {
-        this.setState(
-            {
-                username: e.target.value
-            }
-        );
+        this.setState({username : e.target.value});
     }    
 
     updatePassword = (e) =>
     {
-        this.setState(
-            {
-                password: e.target.value
-            }
-        );
+        this.setState({password: e.target.value});
     }
 
-    handleLogin = (e) =>
+    async handleLogin()
     {
-/*
-        this.result = "";
-        fetch(
-            baseURL + "user?username=" + this.state.email + "&password=" + this.state.password,
-            {
-                method: "GET"
-            }
-        )
-        .then((response) => response.json())
-        .then((result)   => {this.result = JSON.stringify(result)})
-        .catch((err)     => {console.log(err)});
-*/
-        const userID = 0;
-        this.props.history.push("/user/" + userID);
-}
+        let isValid ;
+        await userService.validateUser(this.state.username,this.state.password)
+        .then(data=>{isValid=data})
+        .catch(err=>console.log(err)) ;
+
+        console.log(isValid) ;
+        if(isValid){
+            localStorage.setItem("isUserLogged","true");
+            this.props.history.push("/user/"+this.state.username);
+        }
+    }
 
     render()
     {
@@ -76,7 +67,7 @@ class Login extends Component
                                         <InputGroup>
                                             <Input type="text" onChange={this.updatePassword} placeholder="Password"></Input>
                                         </InputGroup>
-                                        <Button onClick={this.handleLogin} color="success" block>Login</Button>
+                                        <Button onClick={this.handleLogin.bind(this)} color="success" block>Login</Button>
                                     </Form>
                                 </CardBody>
                             </Card>

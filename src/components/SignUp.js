@@ -1,11 +1,16 @@
+import Axios from "axios";
 import React, {Component} from "react";
 import {Container, Row, Col} from "reactstrap";
 import {Card, CardBody} from "reactstrap";
 import {Form, InputGroup, Input, Button} from "reactstrap";
+import axios from 'axios' ;
 
-import NavBar from "./navigation/NavBar.js";
+import NavBar from './navigation/NavBar'
+import User from "../model/User.js";
+import UserService from '../services/UserService'
 
-const baseURL = "http://4c9da7fde897.ngrok.io/"
+//const baseURL = "http://localhost:8080/"
+const userService = new UserService() ;
 
 class SignUp extends Component
 {
@@ -36,46 +41,23 @@ class SignUp extends Component
         this.setState({password: e.target.value});
     }
 
-    register    = (e) => 
+    async register()
     {   
-/*        
-        console.log(baseURL + "user");
-*/
-        this.result = "";
 
-        fetch(
-            baseURL + "user",
-            {
-                method: "post",
-                headers:
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(
-                    
-                    {                
-                        username: this.state.username,
-                        emailID: this.state.email,
-                        password: this.state.password
-                    }
-                )
-            }
-        )
-        .then((response)    => response.json())
-        .then((result)      => this.result = JSON.stringify(result));
-/*
-        if(this.result === "true")
-        {
+        //console.log(baseURL + "user");
+
+        let result ;
+        let user = new User(this.state.username,this.state.email,this.state.password) ;
+        await userService.register(user)
+        .then(res=>{result=res}) ;
+        
+
+        if(result)
             this.props.history.push("/dashboard" + this.state.username);
-        }
         else
-        {
             alert('Invalid User');
-        }
 
         this.props.history.push("/");
-*/
 
     }
 
@@ -84,7 +66,7 @@ class SignUp extends Component
         return(
 
             <div className="sign-up">
-                <NavBar isUserLogged={false}/>
+                <NavBar history={this.props.history} isUserLogged={false}/>
                 <Container>
                     <Row>
                         <Col>
@@ -104,7 +86,7 @@ class SignUp extends Component
                                             <Input type="text" onChange={this.password} placeholder="Password"> </Input>
                                         </InputGroup>
                                         <InputGroup>        
-                                            <Button onClick={this.register} color="success" block>Register</Button> 
+                                            <Button onClick={this.register.bind(this)} color="success" block>Register</Button> 
                                         </InputGroup>
                                     </Form>
                                 </CardBody>

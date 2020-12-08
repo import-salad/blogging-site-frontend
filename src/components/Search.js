@@ -3,6 +3,8 @@ import React, {Component} from "react";
 import NavBar from "./navigation/NavBar.js";
 import PostList from "./posts/PostList.js";
 import Pagination from "./pagination/Pagination.js";
+import BlogService from "../services/BlogService.js";
+import { nativeTouchData } from "react-dom/test-utils";
 
 const library = [
 
@@ -33,6 +35,8 @@ const library = [
 
 ];
 
+const blogService = new BlogService() ;
+
 class Search extends Component
 {
     constructor(props)
@@ -45,17 +49,14 @@ class Search extends Component
             filteredPosts: [],
             filter: "",
             currentPage: 1,
-            postsPerPage: 1
+            postsPerPage: 5
         }
     }
 
+
     updateCategory = (e) =>
     {
-        this.setState(
-            {
-                category: e.target.value
-            }
-        );
+        this.setState({category: e.target.value}) ;
     }
 
     updateFilter = (e) =>
@@ -71,7 +72,7 @@ class Search extends Component
         this.state.posts.forEach(
             (post) =>
             {
-                if(!(post.name.indexOf(keyword) === -1))
+                if(!(post.heading.indexOf(keyword) === -1))
                     postList.push(post);
             }
         )
@@ -86,24 +87,10 @@ class Search extends Component
 
     submitRequest = (e) =>
     {
-        var postList = [];
         const category = this.state.category;
 
-        library.forEach(
-            (post) =>
-            {
-                if(post.category === category)
-                    postList.push(post);
-            }
-        );
-
-        this.setState(
-            {
-                posts: postList,
-                filteredPosts: postList,
-                currentPage: 1
-            }
-        );
+        blogService.getRecommendedBlogs(category)
+        .then((data)=>{this.setState({posts:data,filteredPosts:data,currentPage:1})}) ;
     }
 
     paginate = (number) =>
@@ -132,8 +119,8 @@ class Search extends Component
                     {"Pick a Category: "}
                     <select value={this.state.category} onChange={this.updateCategory}>
                         <option value=""></option>
-                        <option value="Data Structures">Data Structures</option>
-                        <option value="Algorithms">Algorithms</option>
+                        <option value="physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
                     </select>
                     <button onClick={this.submitRequest}>
                         Submit

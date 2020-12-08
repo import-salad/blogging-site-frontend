@@ -1,135 +1,85 @@
 import React, {Component} from "react";
 
 import NavBar from "./navigation/NavBar.js";
-import PostList from "./posts/PostList.js";
 import Pagination from "./pagination/Pagination.js";
+import BlogService from "../services/BlogService.js";
+import PostList from "./posts/PostList.js";
 
-/*
 const Library = 
 [
     {
-        ID: 1,
-      	name: "Star Wars"
+      name: "Star Wars"
     },
     {
-        ID: 2,
-      	name: "Harry Potter"
+      name: "Harry Potter"
     },
     {
-        ID: 3,
-      	name: "Lord of the Rings"
+      name: "Lord of the Rings"
     },
     {
-        ID: 4,
-      	name: "Star Trek"
+      name: "Star Trek"
     },
     {
-        ID: 5,
-      	name: "The Fault in Our Stars"
+      name: "The Fault in Our Stars"
     },
     {
-        ID: 6,
-      	name: "Number the Stars"
+      name: "Number the Stars"
     },
     {
-        ID: 7,
-      	name: "Blue"
+      name: "Blue"
     },
     {
-        ID: 8,
-      	name: "Act Da Fool"
+      name: "Act Da Fool"
     },
     {
-        ID: 9,
-      	name: "The Gilded Cage"
+      name: "The Gilded Cage"
     },
     {
-        ID: 10,
-      	name: "To Get to Heaven First You Have to Die (Bihisht faqat baroi murdagon)"
+      name:
+        "To Get to Heaven First You Have to Die (Bihisht faqat baroi murdagon)"
     },
     {
-        ID: 11,
-      	name: "Lebanon"
+      name: "Lebanon"
     },
     {
-        ID: 12,
-      	name: "Tenderness"
+      name: "Tenderness"
     },
     {
-        ID: 13,
-      	name: "It"
+      name: "It"
     },
     {
-        ID: 14,
-      	name: "Locked Out (Enfermés dehors)"
+      name: "Locked Out (Enfermés dehors)"
     },
     {
-        ID: 15,
-      	name: "Waterloo Bridge"
+      name: "Waterloo Bridge"
     },
     {
-        ID: 16,
-      	name: "Set It Off"
+      name: "Set It Off"
     },
     {
-        ID: 17,
-      	name: "Nil By Mouth"
+      name: "Nil By Mouth"
     },
     {
-        ID: 18,
-      	name: "Monte Carlo"
+      name: "Monte Carlo"
     },
     {
-        ID: 19,
-      	name: "Treasure of the Four Crowns"
+      name: "Treasure of the Four Crowns"
     },
     {
-        ID: 20,
-      	name: "Donnie Darko"
+      name: "Donnie Darko"
     },
     {
-        ID: 21,
-      	name: "Cry-Baby"
+      name: "Cry-Baby"
     },
     {
-        ID: 22,
-      	name: "Juan of the Dead (Juan de los Muertos)"
+      name: "Juan of the Dead (Juan de los Muertos)"
     },
     {
-        ID: 23,
-      	name: "Constant Nymph, The"
+      name: "Constant Nymph, The"
     }
 ];
-*/
 
-const library = [
-
-    {
-        ID: 24,
-        name: "Stacks",
-        category: "Data Structures",
-        body: "This is an article on stacks."
-    },
-    {
-        ID: 25,
-        name: "Queues",
-        category: "Data Structures",
-        body: "This is an article on queues."
-    },
-    {
-        ID: 26,
-        name:  "Insertion Sort",
-        category: "Algorithms",
-        body: "This is an article on insertion sort."
-    },
-    {
-        ID: 27,
-        name: "Merge Sort",
-        category:"Algorithms",
-        body: "This is an article on merge sort."
-    }
-
-];
+const blogService = new BlogService() ;
 
 class Home extends Component
 {
@@ -138,19 +88,45 @@ class Home extends Component
         super(props);
         this.state = 
         {
-            posts: [],
+            isUserLogged: this.props.isUserLogged,
+            posts: Library,
             currentPage: 1,
-            postsPerPage: 2
+            postsPerPage: 5,
+            isLoading:'true'
         };
     }
-
-    componentWillMount()
+    
+    async componentDidMount()
     {
-		this.setState(
+      //let blogHeaders ;
+      await blogService.getRecommendedBlogs("general")
+      .then(data=>{this.setState({posts:data,isLoading:false})})
+
+      console.log(this.state.posts) ;
+		/*this.setState(
             {
-                posts: library
+                posts: Library
             }
-        );
+        ); */
+
+
+        if(localStorage.getItem("isUserLogged") === "true")
+        {
+            this.setState(
+                {
+                    isUserLogged: true 
+                }
+            );
+        }
+        else
+        {
+            this.setState(
+                {
+                    isUserLogged: false
+                }
+            );
+        }
+
 	}
 	
 	paginate = (number) =>
@@ -164,32 +140,22 @@ class Home extends Component
 
     render()
     {
-//		var indexOfLastPost  = this.state.currentPage * this.state.postsPerPage;
-//		var indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
-//		var currentPosts 	 = this.state.posts.slice(indexOfFirstPost,indexOfLastPost);
+      if(this.state.isLoading){
+        return null ;
+      }
 
+		var indexOfLastPost  = this.state.currentPage * this.state.postsPerPage;
+		var indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+		var onPagePosts 	 = this.state.posts.slice(indexOfFirstPost,indexOfLastPost);
+/*
+		console.log(this.state.posts.length);
+*/
         return(
             
             <div className="home">
-                <NavBar 	isUserLogged={false}/>
-
-				{
-				/*	
-					<div className="debug">
-                		<PostList	posts={currentPosts}/>
-						<Pagination 
-							totalPosts={this.state.posts.length}
-							postsPerPage={this.state.postsPerPage}
-							paginate={this.paginate}
-						/>
-					</div>
-				*/
-				}
-
-				{
-					
-				}
-
+                <NavBar isUserLogged={this.state.isUserLogged}/>
+                <PostList posts={onPagePosts}/>
+				<Pagination totalPosts={this.state.posts.length} postsPerPage={this.state.postsPerPage} paginate={this.paginate}/>
             </div>
         );
     }
