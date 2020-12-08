@@ -99,7 +99,7 @@ class Home extends Component
     async componentDidMount()
     {
       //let blogHeaders ;
-      await blogService.getRecommendedBlogs("general")
+      await blogService.getRecommendedBlogs("physics")
       .then(data=>{this.setState({posts:data,isLoading:false})})
 
       console.log(this.state.posts) ;

@@ -65,7 +65,7 @@ class Dashboard extends Component
                             {"USER-ID: " + this.props.match.params.userID}
                         </Col>
                     </Row>
-                    <PostList posts={onPagePosts}/>
+                    <PostList posts={onPagePosts} userID={this.props.match.params.userID}/>
 				<Pagination totalPosts={this.state.posts.length} postsPerPage={this.state.postsPerPage} paginate={this.paginate}/>
                 </Container>
             </div>

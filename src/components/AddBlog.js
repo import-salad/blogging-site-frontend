@@ -5,6 +5,7 @@ import BlogHeader from '../model/BlogHeader';
 import Blog from '../model/Blog';
 import BlogService from '../services/BlogService';
 import NavBar from './navigation/NavBar';
+import { withRouter } from 'react-router-dom';
 
 //const { Title } = Typography;
 
@@ -50,7 +51,7 @@ class AddBlog extends React.Component{
             return alert('Please Log in first');
         }*/
         blogService.addBlog(blog)
-        .then(this.setState({heading:"",category:"",content:""})) ;
+        .then(()=>this.props.history.push("/user/"+this.props.match.params.userID)) ;
 
         //navigate to ViewBlog page for this blog
       }
@@ -61,7 +62,8 @@ class AddBlog extends React.Component{
             <div>
                 <NavBar />
             <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
-                <input 
+                <input
+                    value={this.state.category} 
                     type="text" 
                     placeholder="Category"
                     onChange={this.handleCategory} 
@@ -78,6 +80,7 @@ class AddBlog extends React.Component{
                 <QuillEditor
                     placeholder={"Start Posting Something"}
                     onEditorChange={this.onEditorChange}
+                    content=""
                 />
                 
                 <form ref={SubButton} onSubmit={this.onSubmit}>
@@ -89,4 +92,4 @@ class AddBlog extends React.Component{
       }
 }
 
-export default AddBlog ;
+export default withRouter(AddBlog) ;
