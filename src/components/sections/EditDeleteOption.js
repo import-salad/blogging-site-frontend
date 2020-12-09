@@ -17,8 +17,7 @@ class EditDeleteOption extends React.Component{
 
     async onDeleteBlog(){
         await blogService.deleteBlog(this.props.username,this.props.blogHeader.blogID)
-        .then(()=>alert("successfully deleted"))
-        .then(()=>this.props.history.push("/user/"+this.props.username)) 
+        .then(()=>this.props.isLoading()) 
     }
 
     render(){

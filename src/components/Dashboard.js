@@ -30,10 +30,20 @@ class Dashboard extends Component
 			}
 		)
     }
+
+    componentDidUpdate(){
+        if(!this.props.isUserLogged)
+            this.props.history.push("/") ;
+        this.componentDidMount() ;
+    }
     
     async componentDidMount(){
         await blogService.getUserBlogs(this.props.match.params.userID)
         .then(data=>{this.setState({posts:data,isLoading:false})}) ;
+    }
+
+    isLoading=()=>{
+        this.setState({isLoading:true}) ;
     }
 
     render()
@@ -47,7 +57,7 @@ class Dashboard extends Component
         return(
 
             <div className="dashboard">
-                <NavBar isUserLogged={false} />
+                <NavBar isUserLogged={this.props.isUserLogged} userID={this.props.userID} userLoggedOut={this.props.userLoggedOut} />
                 <Container
                     style = 
                     {
@@ -65,7 +75,7 @@ class Dashboard extends Component
                             {"USER-ID: " + this.props.match.params.userID}
                         </Col>
                     </Row>
-                    <PostList posts={onPagePosts} userID={this.props.match.params.userID}/>
+                    <PostList posts={onPagePosts} userID={this.props.match.params.userID} isLoading={this.isLoading}/>
 				<Pagination totalPosts={this.state.posts.length} postsPerPage={this.state.postsPerPage} paginate={this.paginate}/>
                 </Container>
             </div>

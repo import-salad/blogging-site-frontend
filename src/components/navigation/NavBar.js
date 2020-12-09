@@ -25,23 +25,20 @@ function SignUp(props)
     );
 }
 
-function Greetings(props)
+function Dashboard(props)
 {
     return(
 
-        <div>Welcome, {props.username}</div>
+        <a className = "btn" onClick = {props.onClick}>Dashboard</a>
     );
 }
+
 
 class NavBar extends Component
 {
     constructor(props)
     {
         super(props);
-        this.state = 
-        {
-            isUserLogged: this.props.isUserLogged
-        }
     }
 
     componentWillMount()
@@ -59,6 +56,11 @@ class NavBar extends Component
         this.props.history.push("/search");
     }
 
+    redirectToDashboard = () =>
+    {
+        this.props.history.push("/user/" + this.props.userID);
+    }
+
     handleLogin = () =>
     {
         this.props.history.push("/login");
@@ -66,7 +68,7 @@ class NavBar extends Component
 
     handleLogout = () =>
     {
-        
+        this.props.userLoggedOut() ;
     }
 
     handleSignUp = () =>
@@ -76,14 +78,16 @@ class NavBar extends Component
 
     render()
     {
-        var login  = (this.state.isUserLogged === false)?(<Login  onClick={this.handleLogin} />):(<Logout onClick={this.handleLogout}/>);
-        var signUp = (this.state.isUserLogged === false)?(<SignUp onClick={this.handleSignUp}/>):null;
+        var login  = (this.props.isUserLogged === false)?(<Login  onClick={this.handleLogin} />):(<Logout onClick={this.handleLogout}/>);
+        var signUp = (this.props.isUserLogged === false)?(<SignUp onClick={this.handleSignUp}/>):null;
+        var DASHBOARD = (this.props.isUserLogged === false)?null:<Dashboard onClick = {this.redirectToDashboard}/>;
         return(
 
             <div className="nav">
                 <ul>
                     <li><a className="btn" onClick={this.redirectToHome}  >Home  </a></li>
                     <li><a className="btn" onClick={this.redirectToSearch}>Browse</a></li>
+                    <li>{DASHBOARD}</li>
                     <li>{login} </li>
                     <li>{signUp}</li>
                 </ul>

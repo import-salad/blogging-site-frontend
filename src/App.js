@@ -18,25 +18,50 @@ class App extends Component
         super(props);
         this.state = 
         {
-            userLogged: false,
-            userID: ""
+            isUserLogged: false,
+            ID: "",
+            isLoading:true
         }
     }
 
-    userLoggedIn = (user) =>
+    userLoggedIn = (userID) =>
     {
+        localStorage.setItem("userID",userID) ;
         this.setState(
             {
-                userLogged: true,
-                userID: user.userID
+                isUserLogged: true,
+                ID: userID
             }
         );
+    }
 
-//      console.debug(this.state.userLogged);
+    userLoggedOut = () =>
+    {
+        localStorage.removeItem("userID") ;
+        this.setState(
+            {
+                isUserLogged: false,
+                ID: ""
+            }
+        );
+    }
+
+    
+
+    componentDidMount(){
+        if(localStorage.getItem("userID")  != null)
+            this.setState({
+                isUserLogged:true,
+                ID:localStorage.getItem("userID")
+            }) ;
+        this.setState({isLoading:false});
+        
     }
 
     render()
     {
+        if(this.state.isLoading)
+            return null ;
         return(
 
             <Router>
@@ -51,6 +76,8 @@ class App extends Component
                                     <Home 
                                         {...props} 
                                         isUserLogged={this.state.isUserLogged}
+                                        userID = {this.state.ID}
+                                        userLoggedOut = {this.userLoggedOut}
                                     />
                                 );
                             }
@@ -63,7 +90,11 @@ class App extends Component
                             (props) =>
                             {
                                 return(
-                                    <Search {...props}/>
+                                    <Search {...props}
+                                        isUserLogged={this.state.isUserLogged}
+                                        userID = {this.state.ID}
+                                        userLoggedOut = {this.userLoggedOut}
+                                    />
                                 );
                             }
                         }
@@ -75,7 +106,11 @@ class App extends Component
                             (props) =>
                             {
                                 return(
-                                    <Post {...props}/>
+                                    <Post {...props}
+                                        isUserLogged={this.state.isUserLogged}
+                                        userID = {this.state.ID}
+                                        userLoggedOut = {this.userLoggedOut}
+                                    />
                                 );
                             }
                         }
@@ -103,8 +138,9 @@ class App extends Component
                                 return(
                                     <Login 
                                         {...props}
-                                        isUserLogged={this.state.userLogged}
-                                        userLoggedIn={this.userLoggedIn}
+                                        isUserLogged = {this.state.isUserLogged}
+                                        userID = {this.state.ID}
+                                        userLoggedIn = {this.userLoggedIn}
                                     />
                                 );
                             }
@@ -119,6 +155,9 @@ class App extends Component
                                 return(
                                     <Dashboard
                                         {...props}
+                                        isUserLogged={this.state.isUserLogged}
+                                        userID = {this.state.ID}
+                                        userLoggedOut = {this.userLoggedOut}
                                     />
                                 );
                             }
@@ -133,6 +172,9 @@ class App extends Component
                                 return(
                                     <ViewBlog
                                         {...props}
+                                        isUserLogged = {this.state.isUserLogged}
+                                        userID = {this.state.ID}
+                                        userLoggedOut = {this.userLoggedOut}
                                     />
                                 )
                             }

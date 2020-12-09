@@ -13,7 +13,7 @@ export default function RenderComment(props) {
         alt={comment.username}
       />*/}
       <b>{comment.username} </b>
-      <small>{Date(comment.creationTime).toString()}</small>
+      <small>{(new Date(comment.creationTime)).toString()}</small>
       <p>
         {comment.body}
       </p> 

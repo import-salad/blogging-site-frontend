@@ -1,5 +1,6 @@
 import React from "react";
 import RenderComment from './sections/RenderComment';
+import {Button} from 'reactstrap'
 
 export default function CommentList(props) {
   return (
@@ -15,9 +16,17 @@ export default function CommentList(props) {
         </div>
       ) : null}
 
-      {props.comments.map((comment, index) => (
-        <RenderComment key={index} comment={comment} />
-      ))}
+      {props.comments.map((comment, index) => {
+        return(
+          <div>
+          <RenderComment key={index} comment={comment}  />
+          {(comment.username===props.userID)?(
+            <div>
+                <Button onClick={()=>{props.onDeleteComment(comment.commentID)}}>Delete</Button>
+            </div>):null}
+          </div>
+        )
+      })}
     </div>
   );
 }

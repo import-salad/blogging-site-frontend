@@ -113,7 +113,7 @@ class Search extends Component
 
             <div className="search">
                 <NavBar
-                    isUserLogged={false}
+                    isUserLogged={this.props.isUserLogged} userID={this.props.userID} userLoggedOut={this.props.userLoggedOut}
                 />
                 <div className="drop-down-menu">
                     {"Pick a Category: "}

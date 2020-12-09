@@ -88,7 +88,6 @@ class Home extends Component
         super(props);
         this.state = 
         {
-            isUserLogged: this.props.isUserLogged,
             posts: Library,
             currentPage: 1,
             postsPerPage: 5,
@@ -153,7 +152,7 @@ class Home extends Component
         return(
             
             <div className="home">
-                <NavBar isUserLogged={this.state.isUserLogged}/>
+                <NavBar isUserLogged={this.props.isUserLogged} userID={this.props.userID} userLoggedOut={this.props.userLoggedOut}/>
                 <PostList posts={onPagePosts}/>
 				<Pagination totalPosts={this.state.posts.length} postsPerPage={this.state.postsPerPage} paginate={this.paginate}/>
             </div>

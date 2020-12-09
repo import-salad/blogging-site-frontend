@@ -34,7 +34,7 @@ class PostList extends Component
                                 >
                                     <RenderBlogHeader blogHeader={post} userID={this.props.userID}/>
                                 </a>
-                                <EditDeleteOption username={this.props.userID} blogHeader={post}/>
+                                <EditDeleteOption username={this.props.userID} blogHeader={post} isLoading={this.props.isLoading}/>
                             </li>
                         )
                     )

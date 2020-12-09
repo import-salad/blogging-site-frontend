@@ -25,7 +25,7 @@ class Post extends Component
     {
         return(
             <div className="post">
-                <NavBar isUserLogged={false}/>
+                <NavBar isUserLogged={this.props.isUserLogged} userID={this.props.userID} userLoggedOut={this.props.userLoggedOut}/>
                 {
                 //  this.props.match.params.postID
                 }

@@ -19,7 +19,7 @@ export default class RenderBlog extends React.Component{
                 >
                     <p style={{/**heading style */}}>{blog.blogHeader.heading}</p>
                     <p style={{/**username style */}}>By {blog.blogHeader.username}</p>
-                    <p style={{/**time */}}>created on {Date(blog.blogHeader.creationTime).toString()}</p>
+                    <p style={{/**time */}}>created on {(new Date(blog.blogHeader.creationTime)).toString()}</p>
                     <p>{"\n\n"}</p>
                 </div>
                 <div className="post-body">

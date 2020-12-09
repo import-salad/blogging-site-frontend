@@ -17,7 +17,7 @@ export default class RenderBlogHeader extends React.Component{
                 <p style={{/**username style */}}>By {blogHeader.username}</p>
                 <p style={{/**category style */}}>Tag:  {blogHeader.category}</p>
                 <p style={{/**time */}}>created on { (new Date(blogHeader.creationTime)).toString()} </p>
-                <p style={{/**likes dislikes */}}>{blogHeader.likes} likes      {blogHeader.dislikes} dislikes      {blogHeader.hits} views</p>
+                <p style={{/**likes dislikes */}}>{blogHeader.likes} likes      {blogHeader.dislikes} dislikes</p>
                 <p>{"\n"}</p>
             </div>
             </li>

@@ -32,6 +32,12 @@ class Login extends Component
         this.setState({password: e.target.value});
     }
 
+
+    componentDidUpdate(){
+        if(this.props.isUserLogged)
+            this.props.history.push("/user/"+this.state.username);
+    }
+
     async handleLogin()
     {
         let isValid ;
@@ -39,10 +45,10 @@ class Login extends Component
         .then(data=>{isValid=data})
         .catch(err=>console.log(err)) ;
 
-        console.log(isValid) ;
+        //console.log(isValid) ;
         if(isValid){
-            localStorage.setItem("isUserLogged","true");
-            this.props.history.push("/user/"+this.state.username);
+            //localStorage.setItem("isUserLogged","true");
+            this.props.userLoggedIn(this.state.username) ;
         }
     }
 
@@ -51,7 +57,7 @@ class Login extends Component
         return(
 
             <div className="login">
-                <NavBar isUserLogged={false}/>
+                <NavBar isUserLogged={this.props.isUserLogged} userID={this.props.userID}/>
                 <Container>
                     <Row>
                         <Col>
