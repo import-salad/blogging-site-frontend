@@ -1,9 +1,35 @@
 import React, {Component} from "react";
-import BlogService from "../services/BlogService.js";
 
 import NavBar from "./navigation/NavBar.js";
 
-const blogService = new BlogService() ;
+const library = [
+
+    {
+        ID: 24,
+        name: "Stacks",
+        category: "Data Structures",
+        body: "This is an article on stacks."
+    },
+    {
+        ID: 25,
+        name: "Queues",
+        category: "Data Structures",
+        body: "This is an article on queues."
+    },
+    {
+        ID: 26,
+        name:  "Insertion Sort",
+        category: "Algorithms",
+        body: "This is an article on insertion sort."
+    },
+    {
+        ID: 27,
+        name: "Merge Sort",
+        category:"Algorithms",
+        body: "This is an article on merge sort."
+    }
+
+];
 
 class Post extends Component
 {
@@ -12,20 +38,47 @@ class Post extends Component
         super(props);
         this.state =
         {
-            blog:{}
+            postName: "",
+            postBody: ""
         }
     }
 
-    async componentDidMount(){
-        let blogID = this.props.match.params.postID ;
-        await blogService.getBlog(blogID)
-        .then((data)=>this.setState({blog:data})) ;
+    componentDidUpdate()
+    {
+        if(this.props.isUserLogged === false)
+        {
+            this.props.history.push("/");
+        }
     }
+
+    userLoggedOut = () =>
+    {
+        this.props.userLoggedOut();
+    }
+
     render()
     {
+//      var postName = "";
+//      var postBody = "";
+        var postID = this.props.match.params.postID;
+        for(var i=0;i<library.length;i++)
+        {
+            if(parseInt(postID) === library[i].ID)
+            {
+                this.state.postName = library[i].name;
+                this.state.postBody = library[i].body;
+
+                break;
+            }
+        }
+
         return(
             <div className="post">
-                <NavBar isUserLogged={false}/>
+                <NavBar 
+                    isUserLogged = {this.props.isUserLogged}
+                    userID = {this.props.userID}
+                    userLoggedOut = {this.userLoggedOut}
+                />
                 {
                 //  this.props.match.params.postID
                 }
@@ -39,7 +92,7 @@ class Post extends Component
                         }
                     }
                 >
-                    {this.state.blog.blogHeader.heading}
+                    {this.state.postName}
                 </div>
                 <div className = "post-body">
                     {this.state.postBody}

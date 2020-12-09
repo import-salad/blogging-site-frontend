@@ -31,32 +31,32 @@ class Pagination extends Component
         return(
             <nav>
                 <ul className="pagination">
-                    {
-                        this.state.pageNumbers.map(
-                            (number) =>
-                            {
-                                return(
-                                    <li key={number} className="page-item">
-                                        <a 
-                                            className = "page-link"
-                                            style = 
+                {
+                    this.state.pageNumbers.map(
+                        (number) =>
+                        {
+                            return(
+                                <li key={number} className="page-item">
+                                    <a 
+                                        className = "page-link"
+                                        style = 
+                                        {
                                             {
-                                                {
-                                                    color: (this.props.currentPage === number)?"red":"black"
-                                                }
+                                                color: (this.props.currentPage === number)?"red":"black"
                                             }
-                                            onClick = 
-                                            {
-                                                () => this.props.paginate(number)
-                                            }
-                                        >
-                                            {number}
-                                        </a>
-                                    </li>
-                                );
-                            }
-                        )
-                    }
+                                        }
+                                        onClick = 
+                                        {
+                                            () => this.props.paginate(number)
+                                        }
+                                    >
+                                        {number}
+                                    </a>
+                                </li>
+                            );
+                        }
+                    )
+                }
                 </ul>
             </nav>
         );
